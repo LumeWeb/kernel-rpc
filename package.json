@@ -1,0 +1,31 @@
+{
+    "name": "@lumeweb/kernel-rpc",
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "test": "jest",
+        "build-script": "tsc --project tsconfig.build.json && mv dist-build/build.js dist-build/build.mjs",
+        "compile": "npm run build-script && rimraf node_modules/@lumeweb/dht-rpc-client/node_modules node_modules/@lumeweb/kernel-dht-client/node_modules/libkmodule && node build.js",
+        "build": "npm run compile && node ./dist-build/build.mjs dev"
+    },
+    "dependencies": {
+        "@lumeweb/dht-rpc-client": "https://github.com/LumeWeb/dht-rpc-client.git",
+        "@lumeweb/kernel-dht-client": "https://github.com/LumeWeb/kernel-dht-client.git",
+        "libkmodule": "^0.2.46"
+    },
+    "devDependencies": {
+        "@types/events": "^3.0.0",
+        "@types/node": "^18.0.3",
+        "@types/read": "^0.0.29",
+        "esbuild": "^0.14.49",
+        "libskynetnode": "^0.1.3",
+        "prettier": "^2.7.1",
+        "read": "^1.0.7",
+        "timers-browserify": "^2.0.12",
+        "tslib": "^2.4.0",
+        "typescript": "^4.7.4"
+    },
+    "browser": {
+        "timers": "timers-browserify"
+    }
+}
