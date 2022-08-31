@@ -11,11 +11,12 @@
     "dependencies": {
         "@lumeweb/dht-rpc-client": "https://github.com/LumeWeb/dht-rpc-client.git",
         "@lumeweb/kernel-dht-client": "https://github.com/LumeWeb/kernel-dht-client.git",
+        "@lumeweb/relay-types": "https://github.com/LumeWeb/relay-types.git",
         "libkmodule": "^0.2.46"
     },
     "devDependencies": {
         "@types/events": "^3.0.0",
-        "@types/node": "^18.0.3",
+        "@types/node": "^18.7.14",
         "@types/read": "^0.0.29",
         "esbuild": "^0.14.49",
         "libskynetnode": "^0.1.3",
