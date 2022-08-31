@@ -10,9 +10,25 @@ import type { RPCRequest, RPCResponse } from "@lumeweb/relay-types";
 
 onmessage = handleMessage;
 
-const network = new RpcNetwork(new DHT());
-const dht = network.dht as DHT;
+function idFactory(start = 1, step = 1, limit = 2 ** 32) {
+  let id = start;
 
+  return function nextId() {
+    const nextId = id;
+    id += step;
+    if (id >= limit) id = start;
+    return nextId;
+  };
+}
+
+const nextId = idFactory(1);
+
+let defaultNetwork: RpcNetwork;
+
+const networkInstances = new Map<number, RpcNetwork>();
+
+addHandler("presentSeed", handlePresentSeed);
+addHandler("createNetwork", handleCreateNetwork);
 addHandler("addRelay", handleAddRelay);
 addHandler("removeRelay", handleRemoveRelay);
 addHandler("clearRelays", handleClearRelays);
@@ -20,6 +36,16 @@ addHandler("simpleQuery", handleSimpleQuery);
 addHandler("streamingQuery", handleStreamingQuery);
 addHandler("wisdomQuery", handleWisdomQuery);
 addHandler("ready", handleReady);
+
+async function handlePresentSeed() {
+  if (!defaultNetwork) {
+    defaultNetwork = networkInstances.get(await createNetwork()) as RpcNetwork;
+  }
+}
+
+async function handleCreateNetwork(aq: ActiveQuery) {
+  aq.respond(await createNetwork(false));
+}
 
 async function handleAddRelay(aq: ActiveQuery) {
   const { pubkey = null } = aq.callerInput;
@@ -29,9 +55,11 @@ async function handleAddRelay(aq: ActiveQuery) {
     return;
   }
 
+  const network = getNetwork(aq);
+
   network.addRelay(pubkey);
   try {
-    await dht.addRelay(pubkey);
+    await network.dht.addRelay(pubkey);
   } catch (e: any) {}
 
   aq.respond();
@@ -45,13 +73,14 @@ function handleRemoveRelay(aq: ActiveQuery) {
     return;
   }
 
-  aq.respond(network.removeRelay(pubkey));
+  aq.respond(getNetwork(aq).removeRelay(pubkey));
 }
 
 async function handleClearRelays(aq: ActiveQuery) {
+  const network = getNetwork(aq);
   network.clearRelays();
 
-  await dht.clearRelays();
+  await network.dht.clearRelays();
   aq.respond();
 }
 
@@ -75,6 +104,8 @@ async function handleSimpleQuery(aq: ActiveQuery) {
     aq.reject("relay required");
     return;
   }
+
+  const network = getNetwork(aq);
 
   let resp: RPCResponse | null = null;
 
@@ -126,6 +157,8 @@ async function handleStreamingQuery(aq: ActiveQuery) {
     return;
   }
 
+  const network = getNetwork(aq);
+
   let resp: RPCResponse | null = null;
 
   try {
@@ -161,6 +194,8 @@ async function handleWisdomQuery(aq: ActiveQuery) {
     return;
   }
 
+  const network = getNetwork(aq);
+
   let resp: RPCResponse | null = null;
 
   try {
@@ -185,6 +220,29 @@ async function handleWisdomQuery(aq: ActiveQuery) {
 }
 
 async function handleReady(aq: ActiveQuery) {
-  await network.ready;
+  await getNetwork(aq).ready;
   aq.respond();
+}
+async function createNetwork(def = true): Promise<number> {
+  const dhtInstance = new RpcNetwork(new DHT(def));
+  const id = nextId();
+  networkInstances.set(id, dhtInstance);
+
+  return id;
+}
+
+function getNetwork(aq: ActiveQuery): RpcNetwork {
+  const { network = null } = aq.callerInput;
+
+  if (!network) {
+    return defaultNetwork;
+  }
+
+  if (!networkInstances.has(network)) {
+    const err = "Invalid network id";
+    aq.reject(err);
+    throw err;
+  }
+
+  return networkInstances.get(network) as RpcNetwork;
 }
