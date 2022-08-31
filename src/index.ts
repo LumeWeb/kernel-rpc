@@ -24,6 +24,10 @@ function idFactory(start = 1, step = 1, limit = 2 ** 32) {
 const nextId = idFactory(1);
 
 let defaultNetwork: RpcNetwork;
+let moduleReadyResolve: Function;
+let moduleReady: Promise<void> = new Promise((resolve) => {
+  moduleReadyResolve = resolve;
+});
 
 const networkInstances = new Map<number, RpcNetwork>();
 
@@ -41,6 +45,7 @@ async function handlePresentSeed() {
   if (!defaultNetwork) {
     defaultNetwork = networkInstances.get(await createNetwork()) as RpcNetwork;
   }
+  moduleReadyResolve();
 }
 
 async function handleCreateNetwork(aq: ActiveQuery) {
@@ -55,7 +60,7 @@ async function handleAddRelay(aq: ActiveQuery) {
     return;
   }
 
-  const network = getNetwork(aq);
+  const network = await getNetwork(aq);
 
   network.addRelay(pubkey);
   try {
@@ -65,7 +70,7 @@ async function handleAddRelay(aq: ActiveQuery) {
   aq.respond();
 }
 
-function handleRemoveRelay(aq: ActiveQuery) {
+async function handleRemoveRelay(aq: ActiveQuery) {
   const { pubkey = null } = aq.callerInput;
 
   if (!pubkey) {
@@ -73,11 +78,11 @@ function handleRemoveRelay(aq: ActiveQuery) {
     return;
   }
 
-  aq.respond(getNetwork(aq).removeRelay(pubkey));
+  aq.respond((await getNetwork(aq)).removeRelay(pubkey));
 }
 
 async function handleClearRelays(aq: ActiveQuery) {
-  const network = getNetwork(aq);
+  const network = await getNetwork(aq);
   network.clearRelays();
 
   await network.dht.clearRelays();
@@ -105,7 +110,7 @@ async function handleSimpleQuery(aq: ActiveQuery) {
     return;
   }
 
-  const network = getNetwork(aq);
+  const network = await getNetwork(aq);
 
   let resp: RPCResponse | null = null;
 
@@ -157,7 +162,7 @@ async function handleStreamingQuery(aq: ActiveQuery) {
     return;
   }
 
-  const network = getNetwork(aq);
+  const network = await getNetwork(aq);
 
   let resp: RPCResponse | null = null;
 
@@ -194,7 +199,7 @@ async function handleWisdomQuery(aq: ActiveQuery) {
     return;
   }
 
-  const network = getNetwork(aq);
+  const network = await getNetwork(aq);
 
   let resp: RPCResponse | null = null;
 
@@ -220,7 +225,9 @@ async function handleWisdomQuery(aq: ActiveQuery) {
 }
 
 async function handleReady(aq: ActiveQuery) {
-  await getNetwork(aq).ready;
+  await (
+    await getNetwork(aq)
+  ).ready;
   aq.respond();
 }
 async function createNetwork(def = true): Promise<number> {
@@ -231,8 +238,10 @@ async function createNetwork(def = true): Promise<number> {
   return id;
 }
 
-function getNetwork(aq: ActiveQuery): RpcNetwork {
+async function getNetwork(aq: ActiveQuery): Promise<RpcNetwork> {
   const { network = null } = aq.callerInput;
+
+  await moduleReady;
 
   if (!network) {
     return defaultNetwork;
