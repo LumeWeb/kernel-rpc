@@ -171,8 +171,9 @@ async function handleStreamingQuery(aq: ActiveQuery) {
       relay as Buffer | string,
       query.method,
       query.module,
+      aq.sendUpdate,
       query.data,
-      { ...options, streamHandler: aq.sendUpdate }
+      { ...options }
     );
     resp = await rpcQuery.result;
   } catch (e: any) {
