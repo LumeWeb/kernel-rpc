@@ -166,12 +166,18 @@ async function handleStreamingQuery(aq: ActiveQuery) {
 
   let resp: RPCResponse | null = null;
 
+  let canceled = false;
+
   try {
     const rpcQuery = network.streamingQuery(
       relay as Buffer | string,
       query.method,
       query.module,
-      aq.sendUpdate,
+      (data) => {
+        if (!canceled) {
+          aq.sendUpdate?.(data);
+        }
+      },
       query.data,
       { ...options }
     );
@@ -179,6 +185,7 @@ async function handleStreamingQuery(aq: ActiveQuery) {
     aq.setReceiveUpdate?.((message: any) => {
       if (message && message.cancel) {
         rpcQuery.cancel();
+        canceled = true;
       }
     });
 
