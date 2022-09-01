@@ -37,7 +37,7 @@ addHandler("addRelay", handleAddRelay);
 addHandler("removeRelay", handleRemoveRelay);
 addHandler("clearRelays", handleClearRelays);
 addHandler("simpleQuery", handleSimpleQuery);
-addHandler("streamingQuery", handleStreamingQuery);
+addHandler("streamingQuery", handleStreamingQuery, { receiveUpdates: true });
 addHandler("wisdomQuery", handleWisdomQuery);
 addHandler("ready", handleReady);
 
@@ -175,6 +175,13 @@ async function handleStreamingQuery(aq: ActiveQuery) {
       query.data,
       { ...options }
     );
+
+    aq.setReceiveUpdate?.((message: any) => {
+      if (message && message.cancel) {
+        rpcQuery.cancel();
+      }
+    });
+
     resp = await rpcQuery.result;
   } catch (e: any) {
     aq.reject(e);
