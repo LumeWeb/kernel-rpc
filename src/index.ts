@@ -1,12 +1,8 @@
 import { addHandler, handleMessage } from "libkmodule";
 import type { ActiveQuery } from "libkmodule";
-import { DHT } from "@lumeweb/kernel-dht-client";
-import {
-  RpcNetwork,
-  RpcQueryOptions,
-  StreamingRpcQueryOptions,
-} from "@lumeweb/dht-rpc-client";
-import type { RPCRequest, RPCResponse } from "@lumeweb/relay-types";
+import { SwarmClient } from "@lumeweb/kernel-swarm-client";
+import { RpcNetwork, RpcQueryOptions } from "@lumeweb/rpc-client";
+import type { RPCRequest, RPCResponse } from "@lumeweb/interface-relay";
 
 onmessage = handleMessage;
 
@@ -33,12 +29,7 @@ const networkInstances = new Map<number, RpcNetwork>();
 
 addHandler("presentSeed", handlePresentSeed);
 addHandler("createNetwork", handleCreateNetwork);
-addHandler("addRelay", handleAddRelay);
-addHandler("removeRelay", handleRemoveRelay);
-addHandler("clearRelays", handleClearRelays);
 addHandler("simpleQuery", handleSimpleQuery);
-addHandler("streamingQuery", handleStreamingQuery, { receiveUpdates: true });
-addHandler("wisdomQuery", handleWisdomQuery);
 addHandler("ready", handleReady);
 
 async function handlePresentSeed() {
@@ -51,48 +42,10 @@ async function handlePresentSeed() {
 async function handleCreateNetwork(aq: ActiveQuery) {
   aq.respond(await createNetwork(false));
 }
-
-async function handleAddRelay(aq: ActiveQuery) {
-  const { pubkey = null } = aq.callerInput;
-
-  if (!pubkey) {
-    aq.reject("invalid pubkey");
-    return;
-  }
-
-  const network = await getNetwork(aq);
-
-  network.addRelay(pubkey);
-  try {
-    await network.dht.addRelay(pubkey);
-  } catch (e: any) {}
-
-  aq.respond();
-}
-
-async function handleRemoveRelay(aq: ActiveQuery) {
-  const { pubkey = null } = aq.callerInput;
-
-  if (!pubkey) {
-    aq.reject("invalid pubkey");
-    return;
-  }
-
-  aq.respond((await getNetwork(aq)).removeRelay(pubkey));
-}
-
-async function handleClearRelays(aq: ActiveQuery) {
-  const network = await getNetwork(aq);
-  network.clearRelays();
-
-  await network.dht.clearRelays();
-  aq.respond();
-}
-
 async function handleSimpleQuery(aq: ActiveQuery) {
   const {
-    query = null,
-    relay = null,
+    query = undefined,
+    relay = undefined,
     options = undefined,
   } = aq.callerInput as {
     query: RPCRequest;
@@ -105,127 +58,16 @@ async function handleSimpleQuery(aq: ActiveQuery) {
     return;
   }
 
-  if (!relay) {
-    aq.reject("relay required");
-    return;
-  }
-
   const network = await getNetwork(aq);
 
   let resp: RPCResponse | null = null;
 
   try {
-    const rpcQuery = network.simpleQuery(
-      relay as Buffer | string,
-      query.method,
-      query.module,
-      query.data,
-      query.bypassCache,
-      options
-    );
-    resp = await rpcQuery.result;
-  } catch (e: any) {
-    aq.reject(e);
-  }
-
-  if (resp?.error) {
-    aq.reject(resp?.error);
-    return;
-  }
-
-  aq.respond(resp);
-}
-
-async function handleStreamingQuery(aq: ActiveQuery) {
-  const {
-    query = null,
-    relay = null,
-    options = undefined,
-  } = aq.callerInput as {
-    query: RPCRequest;
-    options: StreamingRpcQueryOptions;
-    relay: Buffer | string;
-  };
-
-  if (!query) {
-    aq.reject("RPCRequest query required");
-    return;
-  }
-
-  if (!relay) {
-    aq.reject("relay required");
-    return;
-  }
-
-  if (!options || !options?.streamHandler) {
-    aq.reject("RPCRequest query required");
-    return;
-  }
-
-  const network = await getNetwork(aq);
-
-  let resp: RPCResponse | null = null;
-
-  let canceled = false;
-
-  try {
-    const rpcQuery = network.streamingQuery(
-      relay as Buffer | string,
-      query.method,
-      query.module,
-      (data) => {
-        if (!canceled) {
-          aq.sendUpdate?.(data);
-        }
-      },
-      query.data,
-      { ...options }
-    );
-
-    aq.setReceiveUpdate?.((message: any) => {
-      if (message && message.cancel) {
-        rpcQuery.cancel();
-        canceled = true;
-      }
+    const rpcQuery = network.factory.simple({
+      relay,
+      query,
+      options,
     });
-
-    resp = await rpcQuery.result;
-  } catch (e: any) {
-    aq.reject(e);
-  }
-
-  if (resp?.error) {
-    aq.reject(resp?.error);
-    return;
-  }
-
-  aq.respond(resp);
-}
-
-async function handleWisdomQuery(aq: ActiveQuery) {
-  const { query = null, options = undefined } = aq.callerInput as {
-    query: RPCRequest;
-    options: RpcQueryOptions;
-    relay: Buffer | string;
-  };
-
-  if (!query) {
-    aq.reject("RPCRequest query required");
-    return;
-  }
-
-  const network = await getNetwork(aq);
-
-  let resp: RPCResponse | null = null;
-
-  try {
-    const rpcQuery = network.wisdomQuery(
-      query.method,
-      query.module,
-      query.data,
-      query.bypassCache ?? undefined,
-      options
-    );
     resp = await rpcQuery.result;
   } catch (e: any) {
     aq.reject(e);
@@ -242,11 +84,11 @@ async function handleWisdomQuery(aq: ActiveQuery) {
 async function handleReady(aq: ActiveQuery) {
   await (
     await getNetwork(aq)
-  ).ready;
+  ).readyWithRelays;
   aq.respond();
 }
 async function createNetwork(def = true): Promise<number> {
-  const dhtInstance = new RpcNetwork(new DHT(def));
+  const dhtInstance = new RpcNetwork(new SwarmClient(def));
   const id = nextId();
   networkInstances.set(id, dhtInstance);
 
