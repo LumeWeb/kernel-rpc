@@ -96,7 +96,7 @@ async function createNetwork(def = true): Promise<number> {
 }
 
 async function getNetwork(aq: ActiveQuery): Promise<RpcNetwork> {
-  const { network = null } = aq.callerInput;
+  const { network = null } = aq?.callerInput ?? {};
 
   await moduleReady;
 
