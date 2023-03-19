@@ -12,6 +12,7 @@
         "@lumeweb/interface-relay": "git+https://git.lumeweb.com/LumeWeb/interface-relay.git",
         "@lumeweb/kernel-swarm-client": "git+https://git.lumeweb.com/LumeWeb/kernel-swarm-client.git",
         "@lumeweb/rpc-client": "git+https://git.lumeweb.com/LumeWeb/rpc-client.git",
+        "b4a": "^1.6.3",
         "libkmodule": "^0.2.53"
     },
     "browser": {
@@ -27,5 +28,10 @@
         "read": "^2.0.0",
         "timers-browserify": "^2.0.12",
         "typescript": "^5.0.2"
+    },
+    "pnpm": {
+        "patchedDependencies": {
+            "b4a@1.6.3": "patches/b4a@1.6.3.patch"
+        }
     }
 }
