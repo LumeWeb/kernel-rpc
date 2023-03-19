@@ -1,6 +1,6 @@
 import { addHandler, handleMessage } from "libkmodule";
 import type { ActiveQuery } from "libkmodule";
-import { SwarmClient } from "@lumeweb/kernel-swarm-client";
+import { createClient, SwarmClient } from "@lumeweb/kernel-swarm-client";
 import { RpcNetwork, RpcQueryOptions } from "@lumeweb/rpc-client";
 import type { RPCRequest, RPCResponse } from "@lumeweb/interface-relay";
 
@@ -88,7 +88,7 @@ async function handleReady(aq: ActiveQuery) {
   aq.respond();
 }
 async function createNetwork(def = true): Promise<number> {
-  const dhtInstance = new RpcNetwork(new SwarmClient(def));
+  const dhtInstance = new RpcNetwork(createClient(def));
   const id = nextId();
   networkInstances.set(id, dhtInstance);
 
