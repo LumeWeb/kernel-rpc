@@ -85,7 +85,7 @@ async function handleReady(aq: ActiveQuery) {
   const network = await getNetwork(aq);
   const swarm: SwarmClient = network.swarm;
 
-  await swarm.init();
+  await swarm.start();
   await swarm.ready();
 
   await (
