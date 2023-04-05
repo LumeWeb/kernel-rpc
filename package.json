@@ -13,7 +13,8 @@
         "@lumeweb/kernel-swarm-client": "git+https://git.lumeweb.com/LumeWeb/kernel-swarm-client.git",
         "@lumeweb/rpc-client": "git+https://git.lumeweb.com/LumeWeb/rpc-client.git",
         "b4a": "^1.6.3",
-        "libkmodule": "^0.2.53"
+        "libkmodule": "^0.2.53",
+        "protomux": "git+https://git.lumeweb.com/LumeWeb/protomux.git"
     },
     "browser": {
         "timers": "timers-browserify"
@@ -32,6 +33,9 @@
     "pnpm": {
         "patchedDependencies": {
             "b4a@1.6.3": "patches/b4a@1.6.3.patch"
+        },
+        "overrides": {
+            "protomux": "git+https://git.lumeweb.com/LumeWeb/protomux.git"
         }
     }
 }
