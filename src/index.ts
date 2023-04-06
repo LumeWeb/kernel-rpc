@@ -1,8 +1,13 @@
 import { addHandler, handleMessage } from "libkmodule";
 import type { ActiveQuery } from "libkmodule";
-import { createClient, SwarmClient } from "@lumeweb/kernel-swarm-client";
+import {
+  createClient,
+  Socket,
+  SwarmClient,
+} from "@lumeweb/kernel-swarm-client";
 import { RpcNetwork, RpcQueryOptions } from "@lumeweb/rpc-client";
 import type { RPCRequest, RPCResponse } from "@lumeweb/interface-relay";
+import { setupStream } from "@lumeweb/rpc-client";
 
 onmessage = handleMessage;
 
@@ -97,6 +102,10 @@ async function createNetwork(def = true): Promise<number> {
   const dhtInstance = new RpcNetwork(createClient(def));
   const id = nextId();
   networkInstances.set(id, dhtInstance);
+
+  dhtInstance.swarm.on("setup", (socket: Socket) => {
+    setupStream(socket);
+  });
 
   return id;
 }
