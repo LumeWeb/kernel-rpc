@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@lumeweb/interface-relay": "git+https://git.lumeweb.com/LumeWeb/interface-relay.git",
+        "protomux": "git+https://git.lumeweb.com/LumeWeb/kernel-protomux-client.git",
         "@lumeweb/kernel-swarm-client": "git+https://git.lumeweb.com/LumeWeb/kernel-swarm-client.git",
         "@lumeweb/libkernel-universal": "git+https://git.lumeweb.com/LumeWeb/libkernel-universal.git",
         "@lumeweb/protomux-rpc-web": "git+https://git.lumeweb.com/LumeWeb/protomux-rpc-web.git",
@@ -32,7 +33,6 @@
     },
     "browser": {
         "timers": "timers-browserify",
-        "protomux": "./src/protomux.ts",
         "protomux-rpc": "@lumeweb/protomux-rpc-web"
     }
 }
