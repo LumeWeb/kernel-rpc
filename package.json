@@ -33,5 +33,10 @@
     "browser": {
         "timers": "timers-browserify",
         "protomux-rpc": "@lumeweb/protomux-rpc-web"
+    },
+    "pnpm": {
+        "patchedDependencies": {
+            "b4a@1.6.3": "patches/b4a@1.6.3.patch"
+        }
     }
 }
