@@ -2,6 +2,7 @@ import { Client, factory } from "@lumeweb/libkernel-universal";
 const MODULE = "_AXYJDzn2fjd-YfuchEegna7iErhun6QwQK7gSa3UNjHvw";
 
 import defer from "p-defer";
+import b4a from "b4a";
 
 class Protomux {
   private isProtomux = true;
@@ -59,14 +60,9 @@ class Channel extends Client {
   private onopen?: Function;
   private onclose?: Function;
   private ondestroy?: Function;
-  private _ready?: Promise<void>;
-
+  private _created = defer();
   private _send?: (data?: any) => void;
-
-  private _opened = defer();
-
   private _queue: Message[] = [];
-
   private _inited = false;
 
   constructor(
@@ -88,6 +84,12 @@ class Channel extends Client {
     this.ondestroy = ondestroy;
   }
 
+  private _ready = defer();
+
+  get ready(): Promise<void> {
+    return this._ready.promise as Promise<void>;
+  }
+
   private _mux: Protomux;
 
   get mux(): Protomux {
@@ -100,6 +102,31 @@ class Channel extends Client {
     return this._channelId;
   }
 
+  async open(): Promise<void> {
+    await this.init();
+    await this._created;
+
+    while (this._queue.length) {
+      await this._queue.shift()?.init();
+    }
+
+    this._ready.resolve();
+  }
+
+  public addMessage({
+    encoding = undefined,
+    onmessage,
+  }: {
+    encoding?: any;
+    onmessage: Function;
+  }) {
+    return createMessage({ channel: this, encoding, onmessage });
+  }
+
+  public async queueMessage(message: Message) {
+    this._queue.push(message);
+  }
+
   private async init(): Promise<void> {
     if (this._inited) {
       return;
@@ -107,7 +134,6 @@ class Channel extends Client {
 
     this._inited = true;
 
-    const created = defer();
     const [update, ret] = this.connectModule(
       "createProtomuxChannel",
       {
@@ -123,9 +149,6 @@ class Channel extends Client {
       },
       (data: any) => {
         switch (data.action) {
-          case "open":
-            this._opened.resolve();
-            break;
           case "onopen":
             this.onopen?.(...data.args);
             break;
@@ -137,42 +160,15 @@ class Channel extends Client {
             break;
           default:
             this._channelId = data;
-            created.resolve();
+            this._created.resolve();
         }
       }
     );
     this._send = update;
 
-    ret.catch((e) => created.reject(e));
+    ret.catch((e) => this._created.reject(e));
 
-    this._ready = created.promise as Promise<void>;
-  }
-
-  async open(): Promise<void> {
-    await this.init();
-    await this._ready;
-
-    while (this._queue.length) {
-      await this._queue.shift()?.init();
-    }
-
-    this._send?.({ action: "open" });
-
-    return this._opened.promise as Promise<void>;
-  }
-
-  public addMessage({
-    encoding = undefined,
-    onmessage,
-  }: {
-    encoding?: any;
-    onmessage: Function;
-  }) {
-    return createMessage({ channel: this, encoding, onmessage });
-  }
-
-  public async queueMessage(message: Message) {
-    this._queue.push(message);
+    return this._created.promise as Promise<void>;
   }
 }
 
@@ -215,6 +211,9 @@ class Message extends Client {
         },
       },
       async (data: any) => {
+        if (data?.args && data?.args[0] instanceof Uint8Array) {
+          data.args[0] = b4a.from(data.args[0]);
+        }
         switch (data.action) {
           case "encode":
             update({
@@ -260,4 +259,5 @@ class Message extends Client {
 const createChannel = factory<Channel>(Channel, MODULE);
 const createMessage = factory<Message>(Message, MODULE);
 
+// @ts-ignore
 export = Protomux;

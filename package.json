@@ -12,15 +12,16 @@
         "@lumeweb/interface-relay": "git+https://git.lumeweb.com/LumeWeb/interface-relay.git",
         "@lumeweb/kernel-swarm-client": "git+https://git.lumeweb.com/LumeWeb/kernel-swarm-client.git",
         "@lumeweb/libkernel-universal": "git+https://git.lumeweb.com/LumeWeb/libkernel-universal.git",
+        "@lumeweb/protomux-rpc-web": "git+https://git.lumeweb.com/LumeWeb/protomux-rpc-web.git",
         "@lumeweb/rpc-client": "git+https://git.lumeweb.com/LumeWeb/rpc-client.git",
         "b4a": "^1.6.3",
         "libkmodule": "^0.2.53",
-        "p-defer": "^4.0.0",
-        "protomux": "git+https://git.lumeweb.com/LumeWeb/protomux.git"
+        "p-defer": "^4.0.0"
     },
     "devDependencies": {
         "@scure/bip39": "^1.2.0",
         "@skynetlabs/skynet-nodejs": "^2.9.0",
+        "@types/b4a": "^1.6.0",
         "@types/node": "^18.15.11",
         "@types/read": "^0.0.29",
         "cli-progress": "^3.12.0",
@@ -31,6 +32,7 @@
     },
     "browser": {
         "timers": "timers-browserify",
-        "protomux": "./src/protomux.ts"
+        "protomux": "./src/protomux.ts",
+        "protomux-rpc": "@lumeweb/protomux-rpc-web"
     }
 }
