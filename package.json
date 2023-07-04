@@ -14,13 +14,16 @@
     "readme": "ERROR: No README data found!",
     "_id": "@lumeweb/kernel-rpc@0.1.0",
     "dependencies": {
-        "@lumeweb/kernel-swarm-client": "^0.0.2-develop.2",
+        "@lumeweb/kernel-swarm-client": "^0.0.2-develop.3",
         "@lumeweb/libkernel": "^0.1.0-develop.14",
-        "@lumeweb/rpc-client": "^0.0.2-develop.1"
+        "@lumeweb/protomux-rpc-web": "^0.0.2-develop.1",
+        "@lumeweb/rpc-client": "^0.0.2-develop.4"
     },
     "devDependencies": {
         "@lumeweb/interface-relay": "^0.0.2-develop.1",
         "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.30",
-        "presetter": "^4.0.1"
+        "@rollup/plugin-alias": "^5.0.0",
+        "presetter": "^4.0.1",
+        "timers-browserify": "^2.0.12"
     }
 }
