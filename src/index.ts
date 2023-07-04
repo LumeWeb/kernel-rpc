@@ -27,12 +27,12 @@ let moduleReady: Promise<void> = new Promise((resolve) => {
 
 const networkInstances = new Map<number, RpcNetwork>();
 
-addHandler("presentSeed", handlePresentSeed);
+addHandler("presentKey", handlePresentKey);
 addHandler("createNetwork", handleCreateNetwork);
 addHandler("simpleQuery", handleSimpleQuery);
 addHandler("ready", handleReady);
 
-async function handlePresentSeed() {
+async function handlePresentKey() {
   if (!defaultNetwork) {
     defaultNetwork = networkInstances.get(await createNetwork()) as RpcNetwork;
   }
