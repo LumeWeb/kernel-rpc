@@ -2,41 +2,25 @@
     "name": "@lumeweb/kernel-rpc",
     "version": "0.1.0",
     "type": "module",
-    "scripts": {
-        "test": "jest",
-        "build-script": "tsc --project tsconfig.build.json && mv dist-build/build.js dist-build/build.mjs",
-        "compile": "npm run build-script && rimraf node_modules/@lumeweb/dht-rpc-client/node_modules node_modules/@lumeweb/kernel-dht-client/node_modules/libkmodule && node build.js",
-        "build": "npm run compile && node ./dist-build/build.mjs dev"
+    "repository": {
+        "type": "git",
+        "url": "gitea@git.lumeweb.com:LumeWeb/kernel-rpc.git"
     },
+    "scripts": {
+        "prepare": "presetter bootstrap",
+        "build": "run build",
+        "semantic-release": "semantic-release"
+    },
+    "readme": "ERROR: No README data found!",
+    "_id": "@lumeweb/kernel-rpc@0.1.0",
     "dependencies": {
-        "@lumeweb/interface-relay": "git+https://git.lumeweb.com/LumeWeb/interface-relay.git",
-        "@lumeweb/kernel-swarm-client": "git+https://git.lumeweb.com/LumeWeb/kernel-swarm-client.git",
-        "@lumeweb/libkernel-universal": "git+https://git.lumeweb.com/LumeWeb/libkernel-universal.git",
-        "@lumeweb/protomux-rpc-web": "git+https://git.lumeweb.com/LumeWeb/protomux-rpc-web.git",
-        "@lumeweb/rpc-client": "git+https://git.lumeweb.com/LumeWeb/rpc-client.git",
-        "b4a": "^1.6.3",
-        "libkmodule": "^0.2.53",
-        "p-defer": "^4.0.0"
+        "@lumeweb/kernel-swarm-client": "^0.0.2-develop.2",
+        "@lumeweb/libkernel": "^0.1.0-develop.14",
+        "@lumeweb/rpc-client": "^0.0.2-develop.1"
     },
     "devDependencies": {
-        "@scure/bip39": "^1.2.0",
-        "@skynetlabs/skynet-nodejs": "^2.9.0",
-        "@types/b4a": "^1.6.0",
-        "@types/node": "^18.15.11",
-        "@types/read": "^0.0.29",
-        "cli-progress": "^3.12.0",
-        "esbuild": "^0.17.17",
-        "read": "^2.1.0",
-        "timers-browserify": "^2.0.12",
-        "typescript": "^5.0.4"
-    },
-    "browser": {
-        "timers": "timers-browserify",
-        "protomux-rpc": "@lumeweb/protomux-rpc-web"
-    },
-    "pnpm": {
-        "patchedDependencies": {
-            "b4a@1.6.3": "patches/b4a@1.6.3.patch"
-        }
+        "@lumeweb/interface-relay": "^0.0.2-develop.1",
+        "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.30",
+        "presetter": "^4.0.1"
     }
 }

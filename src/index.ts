@@ -1,5 +1,5 @@
-import { addHandler, handleMessage } from "libkmodule";
-import type { ActiveQuery } from "libkmodule";
+import { addHandler, handleMessage } from "@lumeweb/libkernel/module";
+import type { ActiveQuery } from "@lumeweb/libkernel/module";
 import { createClient, SwarmClient } from "@lumeweb/kernel-swarm-client";
 import { RpcNetwork, RpcQueryOptions, setupStream } from "@lumeweb/rpc-client";
 import type { RPCRequest, RPCResponse } from "@lumeweb/interface-relay";
@@ -42,6 +42,7 @@ async function handlePresentSeed() {
 async function handleCreateNetwork(aq: ActiveQuery) {
   aq.respond(await createNetwork(false));
 }
+
 async function handleSimpleQuery(aq: ActiveQuery) {
   const {
     query = undefined,
@@ -93,6 +94,7 @@ async function handleReady(aq: ActiveQuery) {
   ).readyWithRelays;
   aq.respond();
 }
+
 async function createNetwork(def = true): Promise<number> {
   const dhtInstance = new RpcNetwork(createClient(def));
   const id = nextId();
