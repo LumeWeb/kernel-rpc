@@ -14,9 +14,9 @@
     "readme": "ERROR: No README data found!",
     "_id": "@lumeweb/kernel-rpc@0.1.0",
     "dependencies": {
-        "@lumeweb/kernel-swarm-client": "^0.0.2-develop.5",
+        "@lumeweb/kernel-swarm-client": "^0.0.2-develop.7",
         "@lumeweb/libkernel": "^0.1.0-develop.14",
-        "@lumeweb/protomux-rpc-web": "^0.0.2-develop.4",
+        "@lumeweb/protomux-rpc-web": "^0.0.2-develop.5",
         "@lumeweb/rpc-client": "^0.0.2-develop.4"
     },
     "devDependencies": {
