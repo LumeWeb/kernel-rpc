@@ -21,7 +21,7 @@
     },
     "devDependencies": {
         "@lumeweb/interface-relay": "^0.0.2-develop.1",
-        "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.38",
+        "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.41",
         "@rollup/plugin-alias": "^5.0.0",
         "presetter": "^4.0.1",
         "timers-browserify": "^2.0.12"

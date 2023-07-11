@@ -15,7 +15,7 @@
             },
             "devDependencies": {
                 "@lumeweb/interface-relay": "^0.0.2-develop.1",
-                "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.38",
+                "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.41",
                 "@rollup/plugin-alias": "^5.0.0",
                 "presetter": "^4.0.1",
                 "timers-browserify": "^2.0.12"
@@ -1793,12 +1793,13 @@
             }
         },
         "node_modules/@lumeweb/presetter-kernel-module-preset": {
-            "version": "0.1.0-develop.38",
-            "resolved": "https://registry.npmjs.org/@lumeweb/presetter-kernel-module-preset/-/presetter-kernel-module-preset-0.1.0-develop.38.tgz",
-            "integrity": "sha512-+S2W2ErpxjXjirx8c4hik9TyUp2dXNzaioXzsUr/s98NaBLhwEQO/4Fe7jyXnhFKLIpk2xf/t/pPIb8/OP0SBg==",
+            "version": "0.1.0-develop.41",
+            "resolved": "https://registry.npmjs.org/@lumeweb/presetter-kernel-module-preset/-/presetter-kernel-module-preset-0.1.0-develop.41.tgz",
+            "integrity": "sha512-1LeRMV8KODkpoOa/jb0KnXnFQy2v1z9F3ZXTDI7qHzmOZxBUpylu+fP6yYcOB1tcxKexz5JzKffK65lueF2Sfg==",
             "dev": true,
             "dependencies": {
                 "@lumeweb/node-library-preset": "0.2.7",
+                "buffer": "^6.0.3",
                 "presetter": "^4.0.1",
                 "vite": "^4.4.2",
                 "vite-plugin-node-polyfills": "^0.9.0",
