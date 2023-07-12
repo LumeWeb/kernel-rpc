@@ -15,7 +15,7 @@
     "_id": "@lumeweb/kernel-rpc@0.1.0",
     "dependencies": {
         "@lumeweb/kernel-swarm-client": "^0.0.2-develop.8",
-        "@lumeweb/libkernel": "^0.1.0-develop.15",
+        "@lumeweb/libkernel": "^0.1.0-develop.16",
         "@lumeweb/protomux-rpc-web": "^0.0.2-develop.7",
         "@lumeweb/rpc-client": "^0.0.2-develop.4"
     },
