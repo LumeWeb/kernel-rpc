@@ -16,12 +16,12 @@
     "dependencies": {
         "@lumeweb/kernel-swarm-client": "^0.0.2-develop.8",
         "@lumeweb/libkernel": "^0.1.0-develop.15",
-        "@lumeweb/protomux-rpc-web": "^0.0.2-develop.6",
+        "@lumeweb/protomux-rpc-web": "^0.0.2-develop.7",
         "@lumeweb/rpc-client": "^0.0.2-develop.4"
     },
     "devDependencies": {
-        "@lumeweb/interface-relay": "^0.0.2-develop.1",
-        "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.41",
+        "@lumeweb/interface-relay": "^0.0.2-develop.3",
+        "@lumeweb/presetter-kernel-module-preset": "^0.1.0-develop.43",
         "@rollup/plugin-alias": "^5.0.0",
         "presetter": "^4.0.1",
         "timers-browserify": "^2.0.12"
