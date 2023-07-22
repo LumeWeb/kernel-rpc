@@ -1,6 +1,10 @@
 import { addHandler, handleMessage } from "@lumeweb/libkernel/module";
 import type { ActiveQuery } from "@lumeweb/libkernel/module";
-import { createClient, SwarmClient } from "@lumeweb/kernel-swarm-client";
+import {
+  createClient,
+  Socket,
+  SwarmClient,
+} from "@lumeweb/kernel-swarm-client";
 import { RpcNetwork, RpcQueryOptions, setupStream } from "@lumeweb/rpc-client";
 import type { RPCRequest, RPCResponse } from "@lumeweb/interface-relay";
 
@@ -101,6 +105,12 @@ async function createNetwork(def = true): Promise<number> {
   networkInstances.set(id, dhtInstance);
 
   dhtInstance.swarm.on("setup", async (peer: any) => setupStream(peer));
+
+  dhtInstance.endPeerOnError = async (peer: Socket) => {
+    const listeners = (await peer.getListeners()) as string[];
+
+    return listeners.length <= 1;
+  };
 
   return id;
 }
