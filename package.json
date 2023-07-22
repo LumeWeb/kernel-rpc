@@ -1,6 +1,6 @@
 {
     "name": "@lumeweb/kernel-rpc",
-    "version": "0.1.0",
+    "version": "0.0.2-develop.1",
     "type": "module",
     "repository": {
         "type": "git",
@@ -12,7 +12,6 @@
         "semantic-release": "semantic-release"
     },
     "readme": "ERROR: No README data found!",
-    "_id": "@lumeweb/kernel-rpc@0.1.0",
     "dependencies": {
         "@lumeweb/kernel-swarm-client": "^0.1.0-develop.1",
         "@lumeweb/libkernel": "^0.1.0-develop.16",
