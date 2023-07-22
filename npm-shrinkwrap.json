@@ -8,10 +8,10 @@
             "name": "@lumeweb/kernel-rpc",
             "version": "0.1.0",
             "dependencies": {
-                "@lumeweb/kernel-swarm-client": "^0.0.2-develop.8",
+                "@lumeweb/kernel-swarm-client": "^0.1.0-develop.1",
                 "@lumeweb/libkernel": "^0.1.0-develop.16",
-                "@lumeweb/protomux-rpc-web": "^0.0.2-develop.11",
-                "@lumeweb/rpc-client": "^0.0.2-develop.4"
+                "@lumeweb/protomux-rpc-web": "^0.0.2-develop.12",
+                "@lumeweb/rpc-client": "^0.0.2-develop.5"
             },
             "devDependencies": {
                 "@lumeweb/interface-relay": "^0.0.2-develop.3",
@@ -1694,20 +1694,20 @@
             }
         },
         "node_modules/@lumeweb/kernel-protomux-client": {
-            "version": "0.0.2-develop.11",
-            "resolved": "https://registry.npmjs.org/@lumeweb/kernel-protomux-client/-/kernel-protomux-client-0.0.2-develop.11.tgz",
-            "integrity": "sha512-28F9Ff/4+H0n6Pajsbcf3CxdkJLz9i82L/p9PD9JhjP5+164d2Rd1U8rquxR6EHMooN/pJ0kgm5cWuSEN1gFtA==",
+            "version": "0.0.2-develop.12",
+            "resolved": "https://registry.npmjs.org/@lumeweb/kernel-protomux-client/-/kernel-protomux-client-0.0.2-develop.12.tgz",
+            "integrity": "sha512-tphI/uXn1BLu72KSfv6zZUrdP5qpd9+BjAunCZNv3DZhMcXAgFpq+ZFMAToaFQQ4OyS28T5HN7YW2FQTnTJjWw==",
             "dependencies": {
-                "@lumeweb/kernel-swarm-client": "^0.0.2-develop.13",
+                "@lumeweb/kernel-swarm-client": "^0.1.0-develop.1",
                 "@lumeweb/libkernel": "^0.1.0-develop.16",
                 "buffer": "^6.0.3",
                 "p-defer": "^4.0.0"
             }
         },
         "node_modules/@lumeweb/kernel-swarm-client": {
-            "version": "0.0.2-develop.13",
-            "resolved": "https://registry.npmjs.org/@lumeweb/kernel-swarm-client/-/kernel-swarm-client-0.0.2-develop.13.tgz",
-            "integrity": "sha512-Xk9JWie6N5JFqlMhCF63QSH7qwfW3qblCjqmT/84TexcTFP0eyRwThLSnq0iixVVK3EdBbbNeWn7imA0UgtFxw==",
+            "version": "0.1.0-develop.1",
+            "resolved": "https://registry.npmjs.org/@lumeweb/kernel-swarm-client/-/kernel-swarm-client-0.1.0-develop.1.tgz",
+            "integrity": "sha512-AmdSRGga63XWvJM6SYpuT0RabfZU+ngA9QWFZ2V75hLDGCp0JdkHCYpOOCVurinofGjRJAUwKe8TFsJ6Sgn8JA==",
             "dependencies": {
                 "@lumeweb/libkernel": "^0.1.0-develop.9",
                 "async-mutex": "^0.4.0",
@@ -1808,11 +1808,11 @@
             }
         },
         "node_modules/@lumeweb/protomux-rpc-web": {
-            "version": "0.0.2-develop.11",
-            "resolved": "https://registry.npmjs.org/@lumeweb/protomux-rpc-web/-/protomux-rpc-web-0.0.2-develop.11.tgz",
-            "integrity": "sha512-/1bhySLooO5qHifK+dlCG7hoH5lMWVX9FikJS0DfYY1sBe0tCSZE/ikYfo4X6dHTUIBQPYxsKtkEaFYzW/cahg==",
+            "version": "0.0.2-develop.12",
+            "resolved": "https://registry.npmjs.org/@lumeweb/protomux-rpc-web/-/protomux-rpc-web-0.0.2-develop.12.tgz",
+            "integrity": "sha512-bgXCBW33WHnElG+apctxbPRlhn0K/zj/nbuZzz+wMaHivbv3f54c6tz9ytU38zIRfWNcOOlRcGJ+njc4vGOfdQ==",
             "dependencies": {
-                "@lumeweb/kernel-protomux-client": "^0.0.2-develop.11"
+                "@lumeweb/kernel-protomux-client": "^0.0.2-develop.12"
             }
         },
         "node_modules/@lumeweb/relay-cfg": {
@@ -1826,21 +1826,21 @@
             }
         },
         "node_modules/@lumeweb/rpc": {
-            "version": "0.0.2-develop.2",
-            "resolved": "https://registry.npmjs.org/@lumeweb/rpc/-/rpc-0.0.2-develop.2.tgz",
-            "integrity": "sha512-3+TEXxk1vHI90MgBEY4dJY8OErcKuqQ0GYRjjb4akOSA89LkL7k1uwHOXNusWk4T6NAx1nfm/6jiB9+FKmI+zw==",
+            "version": "0.0.2-develop.3",
+            "resolved": "https://registry.npmjs.org/@lumeweb/rpc/-/rpc-0.0.2-develop.3.tgz",
+            "integrity": "sha512-zXmioX1HPXt6n+jwz9RLilWUNe1mSoZ6vA7SVmu3JpbNTuJKWqC+2W5csRH8ECQRaWjl5hxF38Gbx4cJV7PbaQ==",
             "dependencies": {
                 "compact-encoding": "2.12.0",
-                "protomux-rpc": "1.4.0"
+                "protomux-rpc": "1.4.1"
             }
         },
         "node_modules/@lumeweb/rpc-client": {
-            "version": "0.0.2-develop.4",
-            "resolved": "https://registry.npmjs.org/@lumeweb/rpc-client/-/rpc-client-0.0.2-develop.4.tgz",
-            "integrity": "sha512-89QKOAIPsFIw4V7gvf2PaZMrfMVDiP7Nbrme8U68rWRkXuG+AI74/4Km4oBAA2wDSmMcTXLp+4iawYhLapp1PQ==",
+            "version": "0.0.2-develop.5",
+            "resolved": "https://registry.npmjs.org/@lumeweb/rpc-client/-/rpc-client-0.0.2-develop.5.tgz",
+            "integrity": "sha512-fNrPKX+f+myPguyii1QJD7AF/KLPhw0qJFcyxGN2iSAYVpNfTx3dkr3i2ezSYJ4Lpjd+pk9mP7mYntyWEAsWIA==",
             "dependencies": {
                 "@lumeweb/interface-relay": "0.0.2-develop.1",
-                "@lumeweb/rpc": "0.0.2-develop.2",
+                "@lumeweb/rpc": "0.0.2-develop.3",
                 "b4a": "^1.6.4",
                 "binconv": "^0.2.0",
                 "hypercore-crypto": "^3.3.1",
@@ -11722,7 +11722,6 @@
             "version": "1.5.0",
             "inBundle": true,
             "license": "MIT",
-            "optional": true,
             "engines": {
                 "node": ">=0.1.90"
             }
@@ -12014,7 +12013,6 @@
             "version": "0.11.0",
             "inBundle": true,
             "license": "MIT",
-            "optional": true,
             "engines": {
                 "node": ">=14"
             }
@@ -12524,7 +12522,6 @@
             "version": "0.1.13",
             "inBundle": true,
             "license": "MIT",
-            "optional": true,
             "dependencies": {
                 "iconv-lite": "^0.6.2"
             }
@@ -12720,7 +12717,6 @@
             "version": "0.6.3",
             "inBundle": true,
             "license": "MIT",
-            "optional": true,
             "dependencies": {
                 "safer-buffer": ">= 2.1.2 < 3.0.0"
             },
@@ -13948,8 +13944,7 @@
         "node_modules/npm/node_modules/safer-buffer": {
             "version": "2.1.2",
             "inBundle": true,
-            "license": "MIT",
-            "optional": true
+            "license": "MIT"
         },
         "node_modules/npm/node_modules/semver": {
             "version": "7.5.2",
@@ -15695,9 +15690,9 @@
             }
         },
         "node_modules/protomux-rpc": {
-            "version": "1.4.0",
-            "resolved": "https://registry.npmjs.org/protomux-rpc/-/protomux-rpc-1.4.0.tgz",
-            "integrity": "sha512-X1JpCksH0yUh8DxoAOCxP4nX5aJeQPiPe3IybdRKc9OXSw/mtn8qdNBm4EgsgqfoL1V4LE5rUgi2vjIFpP/2Cg==",
+            "version": "1.4.1",
+            "resolved": "https://registry.npmjs.org/protomux-rpc/-/protomux-rpc-1.4.1.tgz",
+            "integrity": "sha512-J0WuK5uxyj1sKpGaM5dYvZGa3JRHDLpZI0qgENto8OXXDSPNGvcTQVuyKUFlFoxHYVm20RIsUhiWYZwzfuBMKA==",
             "dependencies": {
                 "bits-to-bytes": "^1.0.0",
                 "compact-encoding": "^2.6.1",
