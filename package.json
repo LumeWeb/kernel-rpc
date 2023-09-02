@@ -1,6 +1,6 @@
 {
     "name": "@lumeweb/kernel-rpc",
-    "version": "0.0.2-develop.4",
+    "version": "0.0.2-develop.5",
     "type": "module",
     "repository": {
         "type": "git",
